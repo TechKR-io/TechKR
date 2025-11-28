@@ -1,2 +1,2 @@
 # TechKR
-A trustless MVP connecting verified Nigerian talents ( both technical &amp; non-technical) with global clients via Cardano smart contracts.
+A trustless MVP connecting skilled Nigerian talents ( both digital & non-digital) with local and global opportunities via Cardano smart contracts.
