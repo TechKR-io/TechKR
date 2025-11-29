@@ -1,0 +1,273 @@
+/* General */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevents scrolling */
+}
+
+/* Container */
+.contents {
+  position: relative;
+  width: 100%;
+}
+
+/* Upper Section */
+.upper-section {
+  position: absolute;
+  display: flex;
+  top: 58px;
+  left: 13%;
+  align-items: center;
+  gap: 20px;
+  max-width: 500px;
+  width: 90%;
+  z-index: 4; /* ensures it’s above overlay */
+}
+
+.company-name {
+  width: 181px;
+  height: 62px;
+  object-fit: contain;
+  display: inline-block;
+}
+
+.hiring,
+.join {
+  position: absolute;
+  display: flex;
+  font-weight: 400;
+  font-size: 25px;
+  width: 200px;
+}
+
+.hiring {
+  color: #FFFFFF;
+  left: 222%;
+}
+
+.join {
+  color: #FFB13D;
+  left: 263%;
+  cursor: pointer;
+}
+
+.join:hover {
+  text-decoration: underline;
+}
+
+.mask-group {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.image-wrapper {
+  position: relative;
+}
+
+.page-image {
+  position: relative;
+  display: inline-block;
+  z-index: 2;
+  top: 0;
+}
+
+.image-background {
+  position: absolute;
+  display: inline-block;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.login,
+.signup {
+  display: flex;
+  width: 350px;
+  height: 45px;
+  position: absolute;
+  top: 192px;
+  border-radius: 25px;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+  justify-content: center;    /* centers text horizontally */
+  align-items: center;
+}
+
+.signup {
+  background-color: #FFEBCE;
+  left: 13%;
+  color: #1800AD;
+  font-weight: 400;
+}
+
+.login {
+  background-color: #1800AD;
+  left: 29%;
+  color: white;
+  z-index: 2;
+  font-weight: 700;
+}
+
+/* Form Section */
+.registration-details {
+  position: relative;
+}
+
+.email,
+.password {
+  display: flex;
+  width: 200px;
+  height: 16px;
+  position: absolute;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  align-items: center;
+  left: 13%;
+}
+
+.email {top: 288px;}
+
+.password {top: 377px;}
+
+.email-input,
+.password-input {
+  display: flex;
+  position: absolute;
+  height: 38px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #FFDEAE;
+  background: white;
+  color: black;
+  padding-left: 10px;
+  border-radius: 10px;
+  left: 13%;
+}
+
+.email-input::placeholder,
+.password-input::placeholder {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+}
+.email-input {top: 319px; width: 640px;}
+
+.password-input {top: 407px; width: 640px;}
+
+.checkbox,
+.forgot-password {
+  display: flex;
+  position: absolute;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  top: 475px;
+}
+
+.checkbox {left: 13%;}
+
+.forgot-password {
+  left: 40%;
+  color: #2C73EB;
+  font-style: solid;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.checkbox input {
+  margin-right: 8px; /* space between box and text */
+  width: 18px;
+  height: 18px;
+  border: 0.5px;
+  border-radius: 2px;
+}
+
+.login-button {
+  display: flex;
+  width: 655px;
+  height: 45px;
+  border-radius: 10px;
+  position: absolute;
+  top: 530px;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  background-color: #1800AD;
+  left: 13%;
+  color: #FFFFFF;
+  font-weight: 600;
+  cursor: pointer;
+  justify-content: center;    /* centers text horizontally */
+  align-items: center;
+}
+
+.new-registration {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  left: 22%;
+  top: 609px;
+  font-size: 20px;
+  font-weight: 400;
+  color: #000000;
+}
+
+.new-account {
+  color: #1800AD;
+  cursor: pointer;
+}
+
+.new-account:hover {
+  text-decoration: underline; /* hover effect */
+}
+
+.line1,
+.line2 {
+  display: flex;
+  width: 245px;
+  height: 2px;
+  border-radius: 10px;
+  position: absolute;
+  top: 685px;
+}
+
+.line1 {
+  left: 13%;
+}
+
+.line2 {
+  left: 34.5%;
+}
+.connect {
+  display: flex;
+  width: 119px;
+  height: 23px;
+  position: absolute;
+  top: 673px;
+  font-size: 15px;
+  font-weight: 400;
+  left: 27.2%;
+}
+.socials {
+  display: flex;
+  width: 264px;
+  height: 39px;
+  position: absolute;
+  top: 721px;
+  left: 23%;
+  gap: 45px;
+  cursor: pointer;
+}
