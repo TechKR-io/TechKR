@@ -1,0 +1,188 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+enum UserType {
+    TALENT
+    CLIENT
+}
+
+enum SkillCategory {
+    TECHNICAL
+    NON_TECHNICAL
+}
+
+enum JobStatus {
+    OPEN
+    IN_PROGRESS
+    COMPLETED
+    CANCELLED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String
+  userType      UserType
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  talent        Talent?
+  client        Client?
+}
+
+model Talent {
+  id              String        @id @default(cuid())
+  userId          String        @unique
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  fullName        String
+  phoneNumber     String
+  state           String
+  skillCategory   SkillCategory
+  skills          String[]
+  yearsExperience Int
+  hourlyRate      Float         @default(10)
+  portfolioUrl    String?
+  resumeUrl       String?
+  bio             String?
+  
+  totalEarnings   Float         @default(0)
+  totalClients    Int           @default(0)
+  totalHours      Float         @default(0)
+  averageRating   Float         @default(0)
+  
+  skillCheckPassed Boolean      @default(false)
+  skillCheckDate   DateTime?
+  
+  applications    Application[]
+  contracts       Contract[]
+  earnings        Earning[]
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model Client {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  name            String
+  companyName     String?
+  country         String
+  industry        String?
+  budgetRangeMin  Float?
+  budgetRangeMax  Float?
+  
+  totalProjects   Int       @default(0)
+  totalSpent      Float     @default(0)
+  
+  jobs            Job[]
+  contracts       Contract[]
+  payments        Payment[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Job {
+  id              String      @id @default(cuid())
+  clientId        String
+  client          Client      @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
+  title           String
+  description     String
+  requiredSkills  String[]
+  hourlyRate      Float
+  estimatedHours  Float?
+  status          JobStatus   @default(OPEN)
+  
+  applications    Application[]
+  contract        Contract?
+  
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model Application {
+  id          String    @id @default(cuid())
+  jobId       String
+  job         Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  talentId    String
+  talent      Talent    @relation(fields: [talentId], references: [id], onDelete: Cascade)
+  
+  coverLetter String?
+  proposedRate Float
+  status      String    @default("pending")
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@unique([jobId, talentId])
+}
+
+model Contract {
+  id              String      @id @default(cuid())
+  jobId           String      @unique
+  job             Job         @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  talentId        String
+  talent          Talent      @relation(fields: [talentId], references: [id], onDelete: Cascade)
+  clientId        String
+  client          Client      @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
+  agreedRate      Float
+  hoursWorked     Float       @default(0)
+  status          JobStatus   @default(IN_PROGRESS)
+  
+  startDate       DateTime    @default(now())
+  endDate         DateTime?
+  
+  talentRating    Int?
+  clientRating    Int?
+  talentFeedback  String?
+  clientFeedback  String?
+  
+  payments        Payment[]
+  
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model Payment {
+  id              String    @id @default(cuid())
+  contractId      String
+  contract        Contract  @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  clientId        String
+  client          Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
+  amount          Float
+  commission      Float
+  tip             Float     @default(0)
+  totalPaid       Float
+  
+  paymentMethod   String?
+  transactionRef  String?
+  
+  createdAt       DateTime  @default(now())
+  
+  earning         Earning?
+}
+
+model Earning {
+  id          String    @id @default(cuid())
+  talentId    String
+  talent      Talent    @relation(fields: [talentId], references: [id], onDelete: Cascade)
+  paymentId   String    @unique
+  payment     Payment   @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  
+  amount      Float
+  tip         Float     @default(0)
+  
+  createdAt   DateTime  @default(now())
+}
