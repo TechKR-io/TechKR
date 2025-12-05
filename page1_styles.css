@@ -98,9 +98,16 @@ body {
   cursor: pointer;
 }
 
+.post-job-container a {
+  display: inline-block;   /* FIX 1 */
+  position: relative;       /* required for absolute text */
+  text-decoration: none;    /* remove link underline */
+}
+
 .post-job-border {
   width: 100%;
   height: auto;
+  display: block;           /* removes bottom whitespace */
 }
 
 .post-job-text {
