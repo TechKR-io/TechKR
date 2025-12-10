@@ -520,8 +520,7 @@ body {
 .first-name,
 .last-name,
 .email,
-.location-input,
-.message-input {
+.location-input {
   position: absolute;
   display: flex;
   width: 610px;
@@ -537,13 +536,33 @@ body {
 .last-name {left: 53.8%;}
 .email {top: 980px}
 .location-input {top: 980px; left: 53.8%;}
-.message-input {top: 1080px; width: 1405px; height: 196px;}
+
+.message-input {
+  position: absolute;
+  width: 1387px;
+  height: 166px;       /* taller height */
+  top: 1080px;
+  left: 12%;
+
+  border: 0.5px solid #00000026;
+  border-radius: 15px;
+  background: #FAFAFA;
+
+  padding: 20px;       /* pushes text + placeholder from top */
+  font-family: 'Poppins';
+  font-size: 20px;
+  font-weight: 500;
+  resize: none;       /* prevents dragging to resize */
+}
+
+.message-input::placeholder {
+  color: #515151;
+}
 
 .first-name::placeholder, 
 .last-name::placeholder,
 .email::placeholder,
-.location-input::placeholder,
-.message-input::placeholder {
+.location-input::placeholder {
   font-family: 'Poppins';
   font-size: 20px;
   font-weight: 500;
