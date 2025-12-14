@@ -25,9 +25,10 @@ export default function TalentDashboard() {
   const [filterStatus, setFilterStatus] = useState("all");
 
   useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    } else if (status === "authenticated" && session?.user?.profileId) {
+    // if (status === "unauthenticated") {
+    //   router.push("/login");
+    // } else
+    if (status === "authenticated" && session?.user?.profileId) {
       fetchDashboard();
     }
   }, [status, session]);
