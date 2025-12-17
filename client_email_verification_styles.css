@@ -1,6 +1,6 @@
 /* General */
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', 'Inter';
   margin: 0;
   padding: 0;
   overflow: hidden; /* Prevents scrolling */
