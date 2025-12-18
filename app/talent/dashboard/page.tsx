@@ -16,18 +16,31 @@ import {
   User,
 } from "lucide-react";
 
+interface DashboardData {
+  talent: {
+    fullName: string;
+  };
+  stats: {
+    totalEarnings: number;
+    totalClients: number;
+    totalHours: number;
+    averageRating: number;
+  };
+  activeJobs: any[];
+  recentEarnings: any[];
+}
+
 export default function TalentDashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [dashboardData, setDashboardData] = useState<unknown>(null);
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
 
   useEffect(() => {
-    // if (status === "unauthenticated") {
-    //   router.push("/login");
-    // } else
     if (status === "authenticated" && session?.user?.profileId) {
       fetchDashboard();
     }
@@ -55,10 +68,22 @@ export default function TalentDashboard() {
     Declined: "bg-red-100 text-red-700",
   };
 
+  // --- GUARDS ---
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-gray-600">Loading dashboard...</p>
+      </div>
+    );
+  }
+
+  // This check is the "Guard". If dashboardData is null, the code stops here.
+  // Everything below this line is "Safe" from null errors.
+  if (!dashboardData) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>No dashboard data available.</p>
       </div>
     );
   }
@@ -108,15 +133,6 @@ export default function TalentDashboard() {
               </button>
               <Link href="/talent/profile">
                 <button className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg">
-                  <img
-                    src="/default-avatar.png"
-                    alt="Profile"
-                    className="w-8 h-8 rounded-full"
-                    onError={(e) => {
-                      e.currentTarget.src =
-                        'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32"%3E%3Ccircle cx="16" cy="16" r="16" fill="%234F46E5"/%3E%3C/svg%3E';
-                    }}
-                  />
                   <User size={20} className="text-gray-600" />
                 </button>
               </Link>
@@ -131,30 +147,11 @@ export default function TalentDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold mb-2">
-                Hi{" "}
-                {dashboardData?.talent?.fullName?.split(" ")[0] ||
-                  session?.user?.email?.split("@")[0] ||
-                  "there"}
-                ,
+                Hi {dashboardData.talent.fullName.split(" ")[0] || "there"},
               </h1>
               <p className="text-gray-600">
                 What would you like to explore today?
               </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <img
-                src="/default-avatar.png"
-                alt="Profile"
-                className="w-16 h-16 rounded-full"
-                onError={(e) => {
-                  e.currentTarget.src =
-                    'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="64" height="64"%3E%3Ccircle cx="32" cy="32" r="32" fill="%234F46E5"/%3E%3C/svg%3E';
-                }}
-              />
-              <div>
-                <p className="font-bold">Akande Tosin</p>
-                <p className="text-sm text-gray-600">UX Designer</p>
-              </div>
             </div>
           </div>
         </div>
@@ -162,101 +159,45 @@ export default function TalentDashboard() {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-xl shadow-sm p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <DollarSign className="text-blue-600" size={24} />
-              </div>
-            </div>
+            <DollarSign className="text-blue-600 mb-4" size={24} />
             <p className="text-gray-600 text-sm mb-1">Total Earnings</p>
             <p className="text-3xl font-bold">
-              ${dashboardData?.stats?.totalEarnings?.toFixed(2) || "0.00"}
+              ${dashboardData.stats.totalEarnings.toFixed(2)}
             </p>
           </div>
 
           <div className="bg-white rounded-xl shadow-sm p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <Users className="text-green-600" size={24} />
-              </div>
-            </div>
+            <Users className="text-green-600 mb-4" size={24} />
             <p className="text-gray-600 text-sm mb-1">Total Clients</p>
             <p className="text-3xl font-bold">
-              {dashboardData?.stats?.totalClients || 0}
+              {dashboardData.stats.totalClients}
             </p>
           </div>
 
           <div className="bg-white rounded-xl shadow-sm p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                <Clock className="text-purple-600" size={24} />
-              </div>
-            </div>
+            <Clock className="text-purple-600 mb-4" size={24} />
             <p className="text-gray-600 text-sm mb-1">Total Hours</p>
             <p className="text-3xl font-bold">
-              {dashboardData?.stats?.totalHours?.toFixed(1) || "0.0"}
+              {dashboardData.stats.totalHours.toFixed(1)}
             </p>
           </div>
 
           <div className="bg-white rounded-xl shadow-sm p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                <Star className="text-yellow-600" size={24} />
-              </div>
-            </div>
+            <Star className="text-yellow-600 mb-4" size={24} />
             <p className="text-gray-600 text-sm mb-1">Average Rating</p>
             <p className="text-3xl font-bold">
-              {dashboardData?.stats?.averageRating?.toFixed(1) || "0.0"}
+              {dashboardData.stats.averageRating.toFixed(1)}
             </p>
           </div>
         </div>
 
         {/* Applied Jobs Section */}
         <div className="bg-white rounded-xl shadow-sm p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold">Applied Job</h2>
-            <div className="flex items-center gap-4">
-              <div className="relative">
-                <Search
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
-                <input
-                  type="text"
-                  placeholder="Search Applied Job"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-              <button className="px-6 py-2 bg-blue-900 text-white rounded-lg font-medium hover:bg-blue-800">
-                Search
-              </button>
-            </div>
-          </div>
-
-          {/* Status Filter Pills */}
-          <div className="flex gap-3 mb-6 overflow-x-auto pb-2">
-            {["Search", "Hired", "Applied", "Pending", "Declined"].map(
-              (status) => (
-                <button
-                  key={status}
-                  onClick={() => setFilterStatus(status.toLowerCase())}
-                  className={`px-4 py-2 rounded-full font-medium whitespace-nowrap transition ${
-                    filterStatus === status.toLowerCase()
-                      ? statusColors[status as keyof typeof statusColors] ||
-                        "bg-blue-100 text-blue-700"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  }`}
-                >
-                  {status}
-                </button>
-              )
-            )}
-          </div>
+          <h2 className="text-2xl font-bold mb-6">Applied Jobs</h2>
 
           {/* Job Cards */}
           <div className="space-y-4">
-            {dashboardData?.activeJobs?.length > 0 ? (
+            {dashboardData.activeJobs.length > 0 ? (
               dashboardData.activeJobs.map((job: any, index: number) => (
                 <div
                   key={index}
@@ -264,7 +205,7 @@ export default function TalentDashboard() {
                 >
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <span className="text-2xl">{job.icon || "💼"}</span>
+                      <span className="text-2xl">💼</span>
                     </div>
                     <div className="flex-1">
                       <h3 className="font-bold text-lg mb-1">
@@ -272,29 +213,17 @@ export default function TalentDashboard() {
                       </h3>
                       <p className="text-gray-600 text-sm mb-3">
                         {job.client?.name || "Remote"} •{" "}
-                        {job.client?.country || "Web3, Nigeria"}
+                        {job.client?.country || "Global"}
                       </p>
-                      <div className="flex flex-wrap gap-2 mb-3">
-                        <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">
-                          Full Time
-                        </span>
-                        <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">
-                          ${job.agreedRate || "30"}/hr
-                        </span>
-                        <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">
-                          +3YoE
-                        </span>
-                        <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">
-                          Programming
-                        </span>
-                      </div>
                       <div className="flex items-center justify-between">
                         <span
-                          className={`px-3 py-1 rounded-full text-sm font-medium ${statusColors.Applied}`}
+                          className={`px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-700`}
                         >
                           {job.status || "Applied"}
                         </span>
-                        <span className="text-sm text-gray-500">1 day ago</span>
+                        <span className="text-sm text-gray-500">
+                          ${job.agreedRate || "30"}/hr
+                        </span>
                       </div>
                     </div>
                   </div>

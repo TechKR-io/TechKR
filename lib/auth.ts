@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./prisma";
 import bcrypt from "bcryptjs";
-
+import { Adapter } from "next-auth/adapters"; // Import Adapter type
 
 // Extend the built-in session types
 declare module "next-auth" {
@@ -13,9 +13,18 @@ declare module "next-auth" {
       email: string;
       userType: string;
       profileId: string;
-    }
+    };
   }
   interface User {
+    id?: string; // Add id as it's often needed
+    userType: string;
+    profileId: string;
+  }
+}
+
+// Extend AdapterUser to prevent internal type mismatches
+declare module "next-auth/adapters" {
+  interface AdapterUser {
     userType: string;
     profileId: string;
   }
@@ -29,7 +38,8 @@ declare module "next-auth/jwt" {
 }
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  // Casting to any handles the internal type mismatch between @auth/prisma-adapter and next-auth v4
+  adapter: PrismaAdapter(prisma) as any,
   session: {
     strategy: "jwt",
   },
