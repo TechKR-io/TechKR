@@ -10,6 +10,7 @@ import { NIGERIAN_STATES } from "@/lib/utils";
 import { Eye, EyeOff } from "lucide-react";
 import { email } from "zod";
 import { SkillCategory } from "@prisma/client";
+import SocialIcons from "@/components/SocialIcons";
 
 interface TalentFormData {
   firstName: string;
@@ -319,39 +320,27 @@ export default function TalentRegistration() {
               {" "}
               Or connect with
             </p>
-            <div className="flex justify-center gap-6">
-              <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50">
-                <img src="/google-icon.svg" alt="Google" className="w-6 h-6" />
-              </button>
-              <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50">
-                <img src="/image/apple.png" alt="Apple" className="w-6 h-6" />
-              </button>
-              <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50">
-                <img src="/facebook.svg" alt="Facebook" className="w-6 h-6" />
-              </button>
-              <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50">
-                <img src="/image/x.png" alt="X" className="w-6 h-6" />
-              </button>
-            </div>
+            <SocialIcons />
           </div>
         </div>
       </div>
 
       {/* Right Side - Image */}
+      {/* <img className="page-image" src="/back.png" /> */}
       <div className="hidden lg:block flex-1 relative">
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: "url(/signup-bg.jpg)",
+            backgroundImage: "url(/mask_group.png)",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-purple-900/40" />
+          {/* <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-purple-900/40" /> */}
         </div>
 
         {/* Orange Curve */}
-        <div className="absolute left-0 top-0 bottom-0 w-32">
+        {/* <div className="absolute left-0 top-0 bottom-0 w-32">
           <svg
             viewBox="0 0 100 100"
             preserveAspectRatio="none"
@@ -359,7 +348,7 @@ export default function TalentRegistration() {
           >
             <path d="M0,0 Q50,50 0,100 L0" fill="#FFA500" />
           </svg>
-        </div>
+        </div> */}
 
         {/* Top Right Text */}
         <div className="absolute top-12 right-12 text-right">

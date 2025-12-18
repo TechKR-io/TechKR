@@ -1,11 +1,19 @@
 'use client'
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { ChevronDown } from "lucide-react"
 
 export default function LandingPage() {
-  const [showJobsDropdown, setShowJobsDropdown] = useState(false)
+  const [showJobsDropdown, setShowJobsDropdown] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = () => setShowJobsDropdown(false);
+    if (showJobsDropdown) {
+      document.addEventListener("click", handleClickOutside);
+    }
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [showJobsDropdown]);
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -13,7 +21,7 @@ export default function LandingPage() {
       <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: "url(/hero-bg.jpg)",
+          backgroundImage: "url(/background.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -104,7 +112,9 @@ export default function LandingPage() {
             </h1>
 
             <p className="text-xl text-white/90 mb-8 leading-relaxed">
-              <span className="font-semibold">TechKR</span> is a platform for skilled technical and non-technical individuals in Nigeria. The aim is to bridge the gap between skills and opportunities.
+              <span className="font-semibold">TechKR</span> is a platform for
+              skilled technical and non-technical individuals in Nigeria. The
+              aim is to bridge the gap between skills and opportunities.
             </p>
 
             <Link href="/join">

@@ -23,7 +23,7 @@ export default function JoinPage() {
             <div
                 className="absolute inset-0 z-0"
                 style={{
-                    backgroundImage: 'url(/hero-bg.jpg)',
+                    backgroundImage: 'url(/background.jpg)',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                 }}
@@ -33,7 +33,7 @@ export default function JoinPage() {
 
                 {/* Content */}
                 <div className="relative z-10 min-h-screen flex items-center justify-center p-6">
-                    <div className="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-12 max-w-2xl w-full">
+                    <div className="bg-white/25 backdrop-blur-md rounded-3xl shadow-2xl p-12 max-w-2xl w-full">
                         {/* Logo */}
                         <div className="flex items-center justify-center mb-8">
                             <span className="text-4xl font-bold">Tech</span>
@@ -103,6 +103,7 @@ export default function JoinPage() {
                                             onChange={() => setSelectedType('talent')}
                                             className="mt-1"
                                         />
+                                        
                                     </div>
                                 </button>
                         </div>

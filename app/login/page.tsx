@@ -231,12 +231,12 @@ export default function LoginPage() {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: "url(/login-bg.jpg)",
+            backgroundImage: "url(/mask_group.png)",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-purple-900/40" />
+          {/* <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-purple-900/40" /> */}
         </div>
 
         {/* Orange Curve */}
@@ -246,7 +246,7 @@ export default function LoginPage() {
             preserveAspectRatio="none"
             className="h-full w-full"
           >
-            <path d="M0,0 Q50,50 0,100 L0,0" fill="#FFA500" />
+            {/* <path d="M0,0 Q50,50 0,100 L0,0" fill="#FFA500" /> */}
           </svg>
         </div>
 

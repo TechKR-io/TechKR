@@ -7,6 +7,7 @@ import Link from "next/link";
 import { authApi } from "@/lib/api";
 import toast from "react-hot-toast";
 import { Eye, EyeOff } from "lucide-react";
+import Image from "next/image";
 
 interface ClientFormData {
   companyName: string;
@@ -372,10 +373,12 @@ export default function ClientRegistration() {
       {/* Right Side - Illustration */}
       <div className="hidden lg:flex flex-1 bg-gradient-to-br from-yellow-50 to-blue-50 items-center justify-center p-12 relative">
         {/* Add your illustration/image here */}
+        <Image src="/client_1.png" alt="client" width={2000} height={2000} />
+        {/* <Image src="/bg 1.png" alt="nothing" width={2000} height={2000} /> */}
         <div className="text-center">
-          <p className="text-gray-600 text-xl">
+          {/* <p className="text-gray-600 text-xl">
             Illustration: Woman with laptop and team avatars with ratings
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
