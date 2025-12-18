@@ -3,11 +3,12 @@ import { prisma } from "@/lib/prisma";
 
 export async function  GET(
     req: NextRequest,
-{ params }: { params: { id: string } }
+{ params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params
         const talent = await prisma.talent.findUnique({
-            where: { id: params.id },
+            where: { id },
             include: {
                 contracts: {
                     where: { status: "IN_PROGRESS"},
@@ -31,6 +32,9 @@ export async function  GET(
         }
 
         return NextResponse.json({
+            talent: {
+                fullName: talent.fullName,
+            },
             stats: {
                 totalEarnings: talent.totalEarnings,
                 totalClients: talent.totalClients,

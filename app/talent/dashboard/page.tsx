@@ -131,8 +131,11 @@ export default function TalentDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold mb-2">
-                Hi {session?.user?.name || "Tosin"},
-                <span className="ml-2">👋</span>
+                Hi{" "}
+                {dashboardData?.talent?.fullName?.split(" ")[0] ||
+                  session?.user?.email?.split("@")[0] ||
+                  "there"}
+                ,
               </h1>
               <p className="text-gray-600">
                 What would you like to explore today?

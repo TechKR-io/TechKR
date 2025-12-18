@@ -3,11 +3,13 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params; // Add await here
+    
     const client = await prisma.client.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         jobs: {
           include: {
@@ -25,10 +27,17 @@ export async function GET(
     });
 
     if (!client) {
-      return NextResponse.json({ error: "Client not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Client not found" },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json({
+      client: {
+        name: client.name,
+        companyName: client.companyName,
+      },
       stats: {
         totalProjects: client.totalProjects,
         totalSpent: client.totalSpent,

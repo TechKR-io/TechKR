@@ -3,11 +3,12 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params
         const talent = await prisma.talent.findUnique({
-            where: { id: params.id },
+            where: { id },
         });
 
         if (!talent) {
@@ -29,9 +30,10 @@ export async function GET(
 
 export async function PUT(
     req: NextRequest,
-    { params }: {params: { id: string } }
+    { params }: {params: Promise<{ id: string }> }
 ) {
     try {
+        const {id} = await params;
         const body = await req.json();
         const {
             fullName,
@@ -45,7 +47,7 @@ export async function PUT(
         } = body;
 
         const talent = await prisma.talent.update({
-            where: { id: params.id },
+            where: { id },
             data: {
                 fullName,
                 phoneNumber,
