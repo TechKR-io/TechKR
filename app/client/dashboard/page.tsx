@@ -66,7 +66,7 @@ export default function ClientDashboard() {
 
             {/* Nav */}
             <nav className="flex items-center gap-8">
-              <Link href="/" className="text-gray-700 hover:text-blue-600">
+              <Link href="/home" className="text-gray-700 hover:text-blue-600">
                 Home
               </Link>
               <Link
