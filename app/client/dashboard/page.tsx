@@ -94,18 +94,21 @@ export default function ClientDashboard() {
               <button className="p-2 hover:bg-gray-100 rounded-lg">
                 <Bell size={20} className="text-gray-600" />
               </button>
-              <button className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg">
-                <img
-                  src="/default-avatar.png"
-                  alt="Profile"
-                  className="w-8 h-8 rounded-full"
-                  onError={(e) => {
-                    e.currentTarget.src =
-                      'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32"%3E%3Ccircle cx="16" cy="16" r="16" fill="%234F46E5"/%3E%3C/svg%3E';
-                  }}
-                />
-                <User size={20} className="text-gray-600" />
-              </button>
+
+              <Link href="/client/profile">
+                <button className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg">
+                  <img
+                    src="/default-avatar.png"
+                    alt="Profile"
+                    className="w-8 h-8 rounded-full"
+                    onError={(e) => {
+                      e.currentTarget.src =
+                        'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32"%3E%3Ccircle cx="16" cy="16" r="16" fill="%234F46E5"/%3E%3C/svg%3E';
+                    }}
+                  />
+                  <User size={20} className="text-gray-600" />
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -128,19 +131,30 @@ export default function ClientDashboard() {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <img
-                src="/default-avatar.png"
-                alt="Profile"
-                className="w-16 h-16 rounded-full"
-                onError={(e) => {
-                  e.currentTarget.src =
-                    'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="64" height="64"%3E%3Ccircle cx="32" cy="32" r="32" fill="%234F46E5"/%3E%3C/svg%3E';
-                }}
-              />
-              <div>
-                <p className="font-bold">Akande Tosin</p>
-                <p className="text-sm text-gray-600">9 Lagos, Nigeria</p>
-              </div>
+              {/* FIX: Wrap this profile card in a Link too for better UX */}
+              <Link
+                href="/client/profile"
+                className="flex items-center gap-3 hover:opacity-80 transition"
+              >
+                <img
+                  src="/default-avatar.png"
+                  alt="Profile"
+                  className="w-16 h-16 rounded-full"
+                  onError={(e) => {
+                    e.currentTarget.src =
+                      'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="64" height="64"%3E%3Ccircle cx="32" cy="32" r="32" fill="%234F46E5"/%3E%3C/svg%3E';
+                  }}
+                />
+                <div>
+                  {/* FIX: Dynamic Name and Country */}
+                  <p className="font-bold">
+                    {dashboardData?.client?.name || "Client Name"}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {dashboardData?.client?.country || "Location Not Set"}
+                  </p>
+                </div>
+              </Link>
             </div>
           </div>
         </div>

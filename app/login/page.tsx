@@ -26,22 +26,40 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormData) => {
     setLoading(true);
+    
     try {
+      setLoading(true);
       const result = await signIn("credentials", {
         email: data.email,
         password: data.password,
-        redirect: false,
+        redirect: false, // Keep this false so we can handle the logic below
       });
 
       if (result?.error) {
         toast.error("Invalid credentials");
       } else {
+        // Because NextAuth stores the session in a cookie, we can fetch the
+        // current state right after a successful login.
+        const { getSession } = await import("next-auth/react");
+        const session = await getSession();
+
         toast.success("Login successful!");
-        // Redirect based on user type (you'll need to get this from session)
-        router.push("/talent/dashboard");
+
+        // Route based on your augmented session types
+        const userType = session?.user?.userType;
+
+        if (userType === "TALENT") {
+          router.push("/talent/dashboard");
+        } else if (userType === "CLIENT") {
+          router.push("/client/dashboard");
+        } else {
+          // Fallback in case userType is missing or different
+          router.push("/");
+        }
       }
     } catch (error) {
-      toast.error("Login failed");
+      console.error("Login error:", error);
+      toast.error("An unexpected error occurred");
     } finally {
       setLoading(false);
     }

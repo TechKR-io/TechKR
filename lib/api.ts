@@ -27,6 +27,7 @@ export const talentApi = {
 // Client API
 export const clientApi = {
   getProfile: (id: string) => api.get(`/clients/${id}`),
+  updateProfile: (id: string, data: any) => api.put(`/clients/${id}`, data),
   getDashboard: (id: string) => api.get(`/clients/${id}/dashboard`),
 };
 

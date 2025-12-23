@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
       estimatedHours,
     } = body;
 
-    if (!clientId || !title || description || !hourlyRate) {
+    if (!clientId || !title || !description || !hourlyRate) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
