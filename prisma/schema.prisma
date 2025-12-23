@@ -108,6 +108,10 @@ model Job {
   
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
+
+  blockchainStatus  String? @default("OFF_CHAIN") // OFF_CHAIN/ LOCKING, LOCKED, RELEASED
+  txHash  String?
+  scriptAddress String?
 }
 
 model Application {
